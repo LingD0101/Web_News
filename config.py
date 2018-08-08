@@ -15,6 +15,7 @@ class Config(object):
     PERMANENT_SESSION_LEFETIME = 86400  # 设置有效时间
 
 
+
 # 定义开发模式
 class DevelopmentConfig(Config):
     DEBUG = True
