@@ -4,7 +4,7 @@ from redis import StrictRedis
 
 class Config(object):
     DEBUG = True  # 设置debug
-    SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@localhost"  # 设置绑定数据库
+    SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@localhost/Web_News"  # 设置绑定数据库
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 追踪
 
     SECRET_KEY = "1vbLyW75/dM3E94CLq7HHor3e2nvMC1Nw0+0OKj8I0i3kSbv4PSEbg=="
