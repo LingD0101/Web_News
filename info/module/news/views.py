@@ -1,9 +1,8 @@
 from flask import session, render_template
-from . import api
+from . import new_blueprint
 
 
-
-@api.route('/')
+@new_blueprint.route('/')
 def index():
     session['name'] = 'LingD'
     return render_template('news/index.html')

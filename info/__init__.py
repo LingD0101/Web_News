@@ -12,6 +12,6 @@ def create_app(config):
     Session(app)
 
     # 导入蓝图,并注册
-    from info.module.news import api
-    app.register_blueprint(api)
+    from info.module.news import new_blueprint
+    app.register_blueprint(new_blueprint)
     return app
