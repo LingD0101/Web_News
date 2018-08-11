@@ -5,6 +5,7 @@ from info.utils.captcha.captcha import captcha
 from info import redis_store, constants
 
 
+# 验证码
 @passport_blur.route('/image_code')
 def generate_image_code():
     """
@@ -24,7 +25,7 @@ def generate_image_code():
     name, text, image = captcha.generate_captcha()
     # 把验证码内容存入redis数据库
     try:
-        redis_store.setex("Image_" + image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
+        redis_store.setex("ImageCode_" + image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(error=RET.DBERR, errmsg="数据库存入错误")
@@ -35,3 +36,12 @@ def generate_image_code():
         # 修改请求头的content类型
         response.headers['Content-type'] = 'image/jpg'
         return response
+
+
+# 短信验证
+@passport_blur.route('/sms_code', methods=['POST'])
+def sen_sms_code():
+    """
+    1.
+    """
+    pass
