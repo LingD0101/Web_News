@@ -8,6 +8,9 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 追踪
 
     SECRET_KEY = "1vbLyW75/dM3E94CLq7HHor3e2nvMC1Nw0+0OKj8I0i3kSbv4PSEbg=="
+
+    # 设置host/port 方便调用
+    # 设置redis数据库
     REDIS_HOST = '127.0.0.1'
     REDIS_PORT = 6379
     SESSION_TYPE = 'redis'  # 制定session保存到redis
