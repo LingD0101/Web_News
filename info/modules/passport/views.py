@@ -209,7 +209,7 @@ def login():
         return jsonify(errno=RET.PARAMERR, errmsg='手机号格式错误')
     # 查询mysql,看是否已注册用户
     try:
-        user = User.query.filter_py(mobile=mobile).first()
+        user = User.query.filter_by(mobile=mobile).first()
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg='数据库查询错误')
