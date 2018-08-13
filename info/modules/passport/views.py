@@ -3,7 +3,7 @@ from flask import request, jsonify, current_app, make_response, session
 from info.utils.response_code import RET
 from info.utils.captcha.captcha import captcha
 from info import redis_store, constants, db
-import re, random
+import re, random, datetime
 from info.librarys.yuntongxun import sms
 from info.models import User
 
@@ -198,5 +198,28 @@ def login():
     9.返回结果
     :return:
     """
-
-    pass
+    # 获取数据
+    mobile = request.json.get('mobile')
+    password = request.json.get('password')
+    # 验证完整性
+    if not all([mobile, password]):
+        return jsonify(errno=RET.PARAMERR, errmsg='参数错误')
+    # 判断手机格式
+    if not re.match(r'^1[3456789]\d{9}$', mobile):
+        return jsonify(errno=RET.PARAMERR, errmsg='手机号格式错误')
+    # 查询mysql,看是否已注册用户
+    try:
+        user = User.query.filter_py(mobile=mobile).first()
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg='数据库查询错误')
+    # 判断用户和密码
+    if user is None or not user.check_password(password):
+        return jsonify(errno=RET.DATAERR, errmsg='用户名或密码错误')
+    # 记录登陆时间
+    user.last_login = datetime.datetime.now()
+    # 缓存用户信息
+    session['user_id'] = user.id
+    session['mobile'] = user.mobile
+    session['nike_name'] = user.nick_name
+    return jsonify(errno=RET.OK, errmsg='登陆成功')

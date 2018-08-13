@@ -112,7 +112,25 @@ $(function () {
         }
 
         // 发起登录请求
-
+        // 获取数据
+        var params = {
+            'mobile':mobile,
+            'password':password
+        }
+        $.ajax({
+            url:'/login',
+            type:'post',
+            contentType:'application/json',
+            data:JSON.stringify(params),
+            success:function (data) {
+                if(data.errno == 0){
+                    location.reload();
+                }else {
+                    $("#login-password-err").html(data.errmsg);
+                    $("#login-password-err").show();
+                }
+            }
+        })
     })
 
 
