@@ -2,6 +2,6 @@
 from flask import Blueprint
 
 # 路由映射
-passport_blur = Blueprint('passport_blue', __name__)
+passport_blue = Blueprint('passport_blue', __name__)
 
 from . import views

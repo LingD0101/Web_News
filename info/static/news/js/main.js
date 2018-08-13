@@ -112,6 +112,7 @@ $(function () {
         }
 
         // 发起登录请求
+
     })
 
 
@@ -146,7 +147,26 @@ $(function () {
         }
 
         // 发起注册请求
-
+        // 设置参数
+        var params = {
+            'mobile':mobile,
+            'smscode':smscode,
+            'password':password
+        };
+        $.ajax({
+            url:'/register',
+            type:'post',
+            data:JSON.stringify(params),
+            contentType:'application/json',
+            success:function (data) {
+                if(data.errno == 0){
+                    location.reload()
+                }else {
+                    $("#register-password-err").html(data.errmsg);
+                    $("#register-password-err").show();
+                }
+            }
+        })
     })
 })
 
