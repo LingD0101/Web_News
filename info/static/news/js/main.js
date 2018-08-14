@@ -114,18 +114,18 @@ $(function () {
         // 发起登录请求
         // 获取数据
         var params = {
-            'mobile':mobile,
-            'password':password
+            'mobile': mobile,
+            'password': password
         }
         $.ajax({
-            url:'/login',
-            type:'post',
-            contentType:'application/json',
-            data:JSON.stringify(params),
-            success:function (data) {
-                if(data.errno == 0){
+            url: '/login',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(params),
+            success: function (data) {
+                if (data.errno == 0) {
                     location.reload();
-                }else {
+                } else {
                     $("#login-password-err").html(data.errmsg);
                     $("#login-password-err").show();
                 }
@@ -167,19 +167,19 @@ $(function () {
         // 发起注册请求
         // 设置参数
         var params = {
-            'mobile':mobile,
-            'smscode':smscode,
-            'password':password
+            'mobile': mobile,
+            'smscode': smscode,
+            'password': password
         };
         $.ajax({
-            url:'/register',
-            type:'post',
-            data:JSON.stringify(params),
-            contentType:'application/json',
-            success:function (data) {
-                if(data.errno == 0){
+            url: '/register',
+            type: 'post',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.errno == 0) {
                     location.reload()
-                }else {
+                } else {
                     $("#register-password-err").html(data.errmsg);
                     $("#register-password-err").show();
                 }
@@ -287,4 +287,12 @@ function generateUUID() {
         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return uuid;
+}
+
+
+// 退出
+function logout() {
+    $.get('/logout', function () {
+        location.reload()
+    })
 }

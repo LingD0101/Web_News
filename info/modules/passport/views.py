@@ -223,3 +223,12 @@ def login():
     session['mobile'] = user.mobile
     session['nike_name'] = user.nick_name
     return jsonify(errno=RET.OK, errmsg='登陆成功')
+
+
+# 退出功能
+@passport_blue.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('mobile', None)
+    session.pop('nick_name', None)
+    return jsonify(errno=RET.OK, errmsg='OK')
