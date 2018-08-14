@@ -10,6 +10,13 @@ def index():
     1.尝试通过session对象从redis获取用户ID
     2.通过id查找用户信息
     3.如果有信息就返回,没有就返回none
+
+    页面右侧的点击排行
+    1.mysql数据库查询新闻数据
+    2.按照点击量排行显示6条
+    3.遍历查询结果
+    4.调用to_dict()获取新闻内容
+    5.返回给模板
     """
     user_id = session.get('user_id')
     user = None

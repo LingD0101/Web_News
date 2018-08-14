@@ -118,10 +118,14 @@ $(function () {
             'password': password
         }
         $.ajax({
-            url: '/login',
+            url: '/passport/login',
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify(params),
+            // 给请求头设置token值
+            headers:{
+                'X-CSRFToken':getCookie('csrf_token')
+            },
             success: function (data) {
                 if (data.errno == 0) {
                     location.reload();
@@ -172,10 +176,14 @@ $(function () {
             'password': password
         };
         $.ajax({
-            url: '/register',
+            url: '/passport/register',
             type: 'post',
             data: JSON.stringify(params),
             contentType: 'application/json',
+            // 给请求头设置token值
+            headers:{
+                'X-CSRFToken':getCookie('csrf_token')
+            },
             success: function (data) {
                 if (data.errno == 0) {
                     location.reload()
@@ -227,11 +235,15 @@ function sendSMSCode() {
     };
     // 设置ajax
     $.ajax({
-        url: "/sms_code",
+        url: "/passport/sms_code",
         type: "POST",
         data: JSON.stringify(params),
         dataType: "json",
         contentType: "application/json",
+        // 给请求头设置token值
+        headers:{
+            'X-CSRFToken':getCookie('csrf_token')
+        },
         success: function (response) {
             if (response.errno == '0') {
                 var num = 60;
@@ -292,7 +304,7 @@ function generateUUID() {
 
 // 退出
 function logout() {
-    $.get('/logout', function () {
+    $.get('/passport/logout', function () {
         location.reload()
     })
 }

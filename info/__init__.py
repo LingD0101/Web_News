@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session  # 使用扩展包实现session信息的储存
 from config import config_name, Config
 from redis import StrictRedis
+from flask_wtf import CSRFProtect, csrf
 
 # 设置日志的记录等级
 logging.basicConfig(level=logging.DEBUG)  # 调试debug级
@@ -20,6 +21,7 @@ logging.getLogger().addHandler(file_log_handler)
 db = SQLAlchemy()
 redis_store = StrictRedis(host=Config.REDIS_HOST, port=Config.REDIS_PORT)
 
+
 def create_app(config):
     # app = Flask(__name__, template_folder="info/templates", static_folder="info/static")
     app = Flask(__name__)
@@ -28,6 +30,15 @@ def create_app(config):
     db.init_app(app)
 
     Session(app)
+    # 开启csrf保护
+    CSRFProtect(app)
+
+    # 设置token,用请求钩子方法,每个请求都会携带csrf
+    @app.after_request
+    def after_request(response):
+        csrf_token = csrf.generate_csrf()
+        response.set_cookie('csrf_token',csrf_token)
+        return response
 
     # 导入主页蓝图,并注册
     from info.modules.news import new_blueprint
